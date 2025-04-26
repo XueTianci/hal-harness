@@ -28,4 +28,4 @@ hal/benchmarks/scienceagentbench/benchmark
 experiments/*
 archive/*
 agents/USACO/data/.DS_Store
-.test.sh
+test.sh
