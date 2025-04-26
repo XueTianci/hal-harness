@@ -349,6 +349,8 @@ Tasks are automatically downloaded via the [Hugging Face Datasets](https://huggi
 playwright install
 ```
 
+**Note**: Make sure to run the agent in an environment that supports interactive inference — that is, head mode (with a visible browser window) instead of headless mode.
+
 Examples:
 
 Running SeeAct
