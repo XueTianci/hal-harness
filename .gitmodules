@@ -36,3 +36,12 @@
 	path = agents/Enigma
 	url = https://github.com/boyiwei/SWE-agent.git
 	branch = enigma-agent-hal
+[submodule "agents/Agent-E"]
+	path = agents/Agent-E
+	url = https://github.com/XueTianci/Agent-E.git
+[submodule "agents/SeeAct"]
+	path = agents/SeeAct
+	url = https://github.com/XueTianci/SeeAct.git
+[submodule "agents/browser-use"]
+	path = agents/browser-use
+	url = https://github.com/XueTianci/browser-use.git

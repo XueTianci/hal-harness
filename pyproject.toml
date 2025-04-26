@@ -24,6 +24,31 @@ dependencies = [
 swebench = [
     "swebench @ git+https://github.com/SWE-bench/SWE-bench@006a760a95c9cc11e987884d7e311d74a16db88a",
 ]
+seeact = [
+    "seeact",
+    "playwright",
+    "supervision",
+    "torch",
+    "aioconsole",
+    "lxml",
+    "sentence_transformers"
+]
+agente = [
+    "autogen",
+    "playwright",
+    "python-json-logger",
+    "pdfplumber",
+    "nltk",
+    "tabulate",
+    "toml"
+]
+browser_use = [
+    "langchain_openai",
+    "playwright",
+    "patchright",
+    "posthog",
+    "opencv-python"
+]
 azure = [
     "azure-mgmt-compute>=29.1.0",
     "azure-mgmt-network>=25.1.0",

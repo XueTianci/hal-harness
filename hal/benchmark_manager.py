@@ -34,6 +34,7 @@ class BenchmarkManager:
                            'corebench_medium',
                            'corebench_hard',
                            'scienceagentbench',
+                           "online_mind2web",
                            ]
 
     def get_benchmark(self, benchmark_name: str) -> BaseBenchmark:
@@ -76,6 +77,9 @@ class BenchmarkManager:
         elif benchmark_name == 'scienceagentbench':
             from .benchmarks.scienceagentbench import ScienceAgentBench
             benchmark = ScienceAgentBench(self.agent_dir, self.config)
+        elif benchmark_name == 'online_mind2web':
+            from .benchmarks.online_mind2web import OnlineMind2WebBenchmark
+            benchmark = OnlineMind2WebBenchmark(self.agent_dir, self.config, self.agent_args)
         else:
             raise ValueError(f"Unknown benchmark: {benchmark_name}")
         

@@ -325,3 +325,43 @@ def run(input_dict: dict[str, dict], **kwargs) -> dict[str, str]:
 - Include `use_self_debug` and `use_knowledge` flags to control agent behavior
 - Output programs are stored in "pred_programs/" directory
 - Docker is required for evaluation
+
+### Online-Mind2Web
+
+**Input Format**:
+
+```python
+{
+    "task_id": {
+        "task_id": "Unique identifier for each task.",
+        "confirmed_task": "Task description.",
+        "website": "Website URL.",
+        "reference_length": "Number of steps required to complete the task.",
+        "level": "Difficulty level of the task."
+    }
+}
+```
+
+**Output Format**: Return a dictionary that maps each task ID to the path where the solution trajectory is stored. The trajectory should include screenshots and the corresponding actions.
+
+**Example Agent**:
+```python
+def run(input: dict[str, dict], **kwargs) -> dict[str, str]:
+
+    assert 'model_name' in kwargs, 'model_name is required'
+    assert len(input) == 1, 'input must contain only one task'
+
+    task_id, task = list(input.items())[0]
+    
+    # Run your agent here to collect the trajectory
+    # (You should implement your own agent here.)
+
+    # return the result paths
+    results = {}
+    results[task_id] = {
+    "trajectory": f"./results/online_mind2web/RUN_ID/{task_id}/result/trajectory", 
+    "result_file": f"./results/online_mind2web/RUN_ID/{task_id}/result/result.json"
+    }
+    
+    return results
+```

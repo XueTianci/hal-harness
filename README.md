@@ -336,6 +336,88 @@ Agent Arguments:
 - `use_knowledge`: using the expert-annotated domain knowledge as additional agent input if `True`
 
 
+
+### [Online-Mind2Web](https://arxiv.org/pdf/2504.01382)
+A benchmark for evaluating web agents' ability to solve real-world user tasks across real-world online websites.
+- **Real-world tasks**: 300 diverse tasks from 136 popular websites, spanning domains such as clothing, food, housing, and transportation.
+- **Reliable automatic evaluation**: Powered by **WebJudge**, achieving **85% agreement** with human judgments.
+- **Supports frontier web agents**
+
+Tasks are automatically downloaded via the [Hugging Face Datasets](https://huggingface.co/docs/datasets) library. To evaluate your agents in the online environment, please first install Playwright:
+
+```bash
+playwright install
+```
+
+Examples:
+
+Running SeeAct
+
+- Install benchmark specific dependencies:
+
+```bash
+pip install -e .[seeact]
+```
+
+```bash
+hal-eval --benchmark online_mind2web \
+  --agent_dir agents/SeeAct \
+  --agent_function main.run \
+  --agent_name "SeeAct" \
+  -A model_name=gpt-4o-mini-2024-07-18 \
+  -A evaluator_webjudge_model_name=gpt-4o-mini-2024-07-18 \
+  -A config_path=your_config_path \
+  --run_id "SeeAct_test" \
+  --max_concurrent 1
+```
+The example of config file can be seen at [here](https://github.com/XueTianci/SeeAct/blob/main/src/config/auto_mode.toml)
+
+Running Browser-Use
+
+- Install benchmark specific dependencies:
+
+```bash
+pip install -e .[browser_use]
+```
+
+```bash
+hal-eval --benchmark online_mind2web \
+  --agent_dir agents/browser-use \
+  --agent_function main.run \
+  --agent_name "Browser_Use" \
+  -A model_name=gpt-4o-mini-2024-07-18 \
+  -A evaluator_webjudge_model_name=gpt-4o-mini-2024-07-18 \
+  -A max_steps=30 \
+  --run_id "Browser_Use_test" \
+  --max_concurrent 1
+```
+
+Running Agent-E
+
+- Install benchmark specific dependencies:
+
+```bash
+pip install -e .[agente]
+```
+
+```bash
+hal-eval --benchmark online_mind2web \
+  --agent_dir agents/Agent-E \
+  --agent_function main.run \
+  --agent_name "Agent-E" \
+  -A model_name=gpt-4o-mini-2024-07-18 \
+  -A evaluator_webjudge_model_name=gpt-4o-mini-2024-07-18 \
+  -A planner_max_chat_round=60 \
+  -A browser_nav_max_chat_round=30 \
+  --run_id "Agent-E_test" \
+  --max_concurrent 1
+```
+
+Agent Arguments:
+- `evaluator_webjudge_model_name`: Name of the backbone model used by WebJudge for evaluation.
+- `run_id`: **Required**. A unique identifier for your evaluation run. It is necessary for locating stored trajectories, which are later evaluated by WebJudge.
+
+
 ### [CollaborativeAgentBench](https://github.com/facebookresearch/sweet_rl)
 - Benchmark for evaluating agents' capabilities to collaborate with humans for artifact creations
 - Supports both frontend design and backend programming
