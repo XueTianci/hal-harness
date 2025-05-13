@@ -32,6 +32,7 @@ import traceback
 from datetime import datetime
 from pathlib import Path
 import sys
+import weave
 
 load_dotenv()
 
@@ -81,6 +82,7 @@ load_dotenv()
     type=str,
     help="One or more args to pass to inspect eval (e.g. -I token_limit=1000 -I model_args='{'temperature': 0.5}'"
 )
+@weave.op()
 def main(
     config,
     benchmark,

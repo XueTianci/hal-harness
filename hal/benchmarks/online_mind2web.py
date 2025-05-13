@@ -17,7 +17,7 @@ class OnlineMind2WebBenchmark(BaseBenchmark):
         self.setup_script = ''
         self.requires_sandbox = False
         self.score_threshold = 3
-        self.num_workers = 1
+        self.num_workers = 30
         self.agent_args = agent_args
 
         # Load the dataset
@@ -47,6 +47,10 @@ class OnlineMind2WebBenchmark(BaseBenchmark):
 
         eval_results = {task_id: result for task_id, result in results}
         return eval_results
+        
+        # eval_results = {}
+        # return eval_results
+
 
     @staticmethod
     def _evaluate_single_output(task_tuple, run_id, benchmark, agent_args, score_threshold) -> Tuple[str, Dict[str, Any]]:
@@ -133,18 +137,19 @@ class OnlineMind2WebBenchmark(BaseBenchmark):
             else:
                 failed_tasks.append(task_id)
 
-        metrics: Dict[str, Any] = {
-            "accuracy": len(successful_tasks) / total_tasks,
+        accuracy = len(successful_tasks) / total_tasks if total_tasks > 0 else 0.0
+        metrics = {
+            "accuracy": accuracy,
             "successful_tasks": successful_tasks,
             "failed_tasks": failed_tasks,
+            "total_tasks": total_tasks,
         }
 
         # Append per-level accuracies: accuracy_easy, accuracy_medium, …
         for level, count in level_correct_count.items():
-            if count["total"] > 0:
-                metrics[f"accuracy_{level}"] = count["success"] / count["total"]
-            else:
-                metrics[f"accuracy_{level}"] = 0
+            level_total = count["total"]
+            metrics[f"accuracy_{level}"] = count["success"] / level_total if level_total > 0 else 0.0
+            metrics[f"total_{level}"] = level_total
 
         return metrics
 

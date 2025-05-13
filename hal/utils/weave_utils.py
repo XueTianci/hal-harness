@@ -96,13 +96,14 @@ def fetch_weave_calls(client) -> List[Dict[str, Any]]:
         "project_id": client._project_id(),
         "filter": {"trace_roots_only": False},
         "sort_by": [{"field":"started_at","direction":"desc"}],
+        "columns": ["id", "started_at", "ended_at", "attributes"],
     }))
     
     return calls
 
 def get_call_ids(task_id, client):
     """Get all call ids for calls given a task id"""
-    calls = client.get_calls()
+    calls = client.get_calls(columns=["id","attributes"])
     task_calls = [c for c in calls if c.attributes['weave_task_id'] == task_id]
     return [c.id for c in task_calls]
 
@@ -179,7 +180,7 @@ def get_total_cost(client):
     # Fetch all the calls in the project
     print_step("Getting token usage data (this can take a while)...")
     calls = list(
-        client.get_calls(filter={"trace_roots_only": False}, include_costs=False)
+        client.get_calls(filter={"trace_roots_only": False}, include_costs=False, columns=["summary"])
     )
 
     with create_progress() as progress:

@@ -12,7 +12,7 @@ from rich.table import Table
 from rich.box import ROUNDED
 from .utils.logging_utils import terminal_print
 from .inspect.inspect import is_inspect_benchmark
-from .utils.weave_utils import get_call_ids, delete_calls
+from .utils.weave_utils import get_call_ids, delete_calls,MODEL_PRICES_DICT
 class AgentRunner:
     """Handles running agents either locally or on VMs"""
 
@@ -205,6 +205,19 @@ class AgentRunner:
                     agent_output.update(previous_output)
             
         else:
+            if "browser-use" in self.agent_dir and ("gemini" or "deepseek" in self.agent_args["model_name"]):
+                if "gemini" in self.agent_args["model_name"]:
+                    weave_client.add_cost(
+                            llm_id=f"models/{self.agent_args['model_name']}",
+                            prompt_token_cost=MODEL_PRICES_DICT[self.agent_args["model_name"]]["prompt_tokens"],
+                            completion_token_cost=MODEL_PRICES_DICT[self.agent_args["model_name"]]["completion_tokens"]
+                        )
+                else:
+                    weave_client.add_cost(
+                            llm_id=self.agent_args['model_name'],
+                            prompt_token_cost=MODEL_PRICES_DICT[self.agent_args["model_name"]]["prompt_tokens"],
+                            completion_token_cost=MODEL_PRICES_DICT[self.agent_args["model_name"]]["completion_tokens"]
+                        )
             # Run agent on all tasks
             with create_progress() as progress:
                 task = progress.add_task("Running agents... (check logs in results directory for more details)", total=len(dataset))

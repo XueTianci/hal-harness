@@ -29,3 +29,4 @@ experiments/*
 archive/*
 agents/USACO/data/.DS_Store
 test.sh
+test.ipynb
